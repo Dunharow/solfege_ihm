@@ -9,7 +9,7 @@
 class Note {
 
 private:
-    QString m_pitch;
+    int m_pitch;
 	int m_octave;
     QString m_duration;
 	bool m_dot;
@@ -18,7 +18,7 @@ private:
 public:
 	Note(); // create a random note
     QString getNote();
-    QString getPitch();
+    int getPitch();
 };
 
 #endif

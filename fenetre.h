@@ -17,7 +17,8 @@ class Fenetre : public QWidget {
     Q_OBJECT
 
     private:
-        // HIM
+        // IHM
+        QPushButton *m_buttons[7];
         QLabel *m_image_note;
         QPushButton *m_buttonDO;
         QPushButton *m_buttonRE;
@@ -26,10 +27,15 @@ class Fenetre : public QWidget {
         QPushButton *m_buttonSOL;
         QPushButton *m_buttonLA;
         QPushButton *m_buttonSI;
-        QLabel *m_commentaire;
+        QLabel *m_reponse1;
+        QLabel *m_reponse2;
+        QLabel *m_reponse3;
 
         // VARIABLES UTILES
         Note m_note;
+
+        // OTHER
+        QString m_noteNames[7];
 
     public:
         Fenetre();
