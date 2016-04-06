@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/resources">
+        <file>images/clef_fa.png</file>
+        <file>images/clef_sol.png</file>
+        <file>images/sol_do4.png</file>
+        <file>images/sol_do5.png</file>
+        <file>images/sol_fa4.png</file>
+        <file>images/sol_fa5.png</file>
+        <file>images/sol_la4.png</file>
+        <file>images/sol_la5.png</file>
+        <file>images/sol_mi4.png</file>
+        <file>images/sol_mi5.png</file>
+        <file>images/sol_re4.png</file>
+        <file>images/sol_re5.png</file>
+        <file>images/sol_si4.png</file>
+        <file>images/sol_sol4.png</file>
+        <file>images/sol_sol5.png</file>
+    </qresource>
+</RCC>

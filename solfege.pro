@@ -8,3 +8,8 @@ SOURCES += \
 HEADERS += \
     fenetre.h \
     note.h
+
+DISTFILES +=
+
+RESOURCES += \
+    resources.qrc

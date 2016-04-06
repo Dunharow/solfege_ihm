@@ -2,18 +2,21 @@
 
 using namespace std;
 
-Note::Note() {
+Note::Note(int min_pitch, int max_pitch, int min_octave, int max_octave) {
+    srand((unsigned int)time(NULL));
 
-	srand((unsigned int)time(NULL));
+    m_pitch = m_octave = -1;
 
-    // RANDOM PITCH
-    m_pitch = rand() % 7;
+    while( ((m_pitch<min_pitch) && (m_octave<min_octave)) || ((m_pitch>max_pitch) && (m_octave>max_octave)) ) {
+        // RANDOM PITCH
+        m_pitch = rand() % 7 + 1;
 
-    // RANDOM OCTAVE
-	m_octave = rand() % 6 + 2;
+        // RANDOM OCTAVE
+        m_octave = rand() % 7 + 1;
+    }
 
     // OTHERS
-	m_duration = 4;
+    m_duration = 4;
     m_dot = false;
 }
 
@@ -51,4 +54,7 @@ int Note::getPitch() {
     return m_pitch;
 }
 
+int Note::getOctave() {
+    return m_octave;
+}
 

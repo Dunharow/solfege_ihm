@@ -2,13 +2,7 @@
 #define DEF_MAFENETRE
 
 #include <QApplication>
-#include <QWidget>
-#include <QPushButton>
-#include <QHBoxLayout>
-#include <QVBoxLayout>
-#include <QLabel>
-#include <QString>
-#include <QSignalMapper>
+#include <QtWidgets>
 
 #include <note.h>
 
@@ -20,6 +14,7 @@ class Fenetre : public QWidget {
         // IHM
         QPushButton *m_buttons[7];
         QLabel *m_image_note;
+        QLabel *m_image_clef;
         QPushButton *m_buttonDO;
         QPushButton *m_buttonRE;
         QPushButton *m_buttonMI;
