@@ -3,7 +3,6 @@
 
 #include <string>
 #include <stdlib.h>  // srand, rand
-#include <time.h> // time to initialize random
 #include <QString>
 
 #include <functions.h>

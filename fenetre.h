@@ -1,11 +1,14 @@
 #ifndef DEF_MAFENETRE
 #define DEF_MAFENETRE
 
+#define STAFF_NB_NOTES 4
+
 #include <QApplication>
 #include <QtWidgets>
 
 #include <Note.h>
 #include <Staff.h>
+#include <Score.h>
 
 class Fenetre : public QWidget {
 
@@ -22,6 +25,8 @@ class Fenetre : public QWidget {
 
         // VARIABLES UTILES
         Staff *m_staff;
+        int m_current_note;
+        Score *m_score;
 
         // OTHER
         QString m_noteNames[7];
@@ -29,6 +34,8 @@ class Fenetre : public QWidget {
     public:
         Fenetre();
         void createLayout();
+        void endGame();
+        void continueGame();
 
     public slots:
         bool checkSolution(int a_pitch);

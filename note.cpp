@@ -3,8 +3,6 @@
 using namespace std;
 
 Note::Note(int min_pitch, int max_pitch, int min_octave, int max_octave) {
-    srand((unsigned int)time(NULL));
-
     m_pitch = m_octave = -1;
 
     m_octave = rand()%(max_octave-min_octave) + min_octave; // random between min and max
