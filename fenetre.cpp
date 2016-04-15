@@ -1,4 +1,4 @@
-#include "fenetre.h"
+#include "Fenetre.h"
 
 Fenetre::Fenetre() : QWidget() {
 
@@ -14,11 +14,12 @@ Fenetre::Fenetre() : QWidget() {
     /* Creation de l'interface */
     createLayout();
 
-    /* Génération d'une note aléatoire */
-    Note m_note(1,6,4,5);
-    m_image_clef->setPixmap(QPixmap(":/resources/images/clef_sol.png"));
-    m_image_note->setPixmap(QPixmap(":/resources/images/sol_"+m_note.getNote()+".png"));
-    setWindowTitle(m_note.getNote());
+    // Génération d'une partition
+    m_staff = new Staff(4,"sol",0,5,4,5);
+    m_image_clef->setPixmap(QPixmap(":/resources/images/clef_" + m_staff->getClef() + ".png"));
+    for (int i=0; i<4; i++) {
+        m_image_note[i]->setPixmap(QPixmap(":/resources/images/sol_"+m_staff->getNotes(i)+".png"));
+    }
 
     /* Connection des signaux / slot */
     QSignalMapper *signalMapper = new QSignalMapper(this);
@@ -34,11 +35,13 @@ void Fenetre::createLayout() {
 
     /* Layout de la partition */
     QHBoxLayout *layout_partition = new QHBoxLayout;
-    m_image_clef = new QLabel("");
-    m_image_note = new QLabel("");
     layout_partition->insertStretch(0); // horizontal space
+    m_image_clef = new QLabel("");
     layout_partition->addWidget(m_image_clef);
-    layout_partition->addWidget(m_image_note);
+    for (int i=0; i<4; i++) {
+        m_image_note[i] = new QLabel("");
+        layout_partition->addWidget(m_image_note[i]);
+    }
     layout_partition->insertStretch(-1); // horizontal space
     layout_partition->setSpacing(0);
 
@@ -69,9 +72,9 @@ void Fenetre::createLayout() {
 
 bool Fenetre::checkSolution(int a_pitch) {
 
-    m_reponse2->setText(m_noteNames[m_note.getPitch()]);
+    m_reponse2->setText(m_noteNames[m_staff->getPitches(1)]);
 
-    if (a_pitch == m_note.getPitch()) {
+    if (a_pitch == m_staff->getPitches(1)) {
         m_reponse2->setStyleSheet("QLabel {color:green;}");
         return true;
     } else {

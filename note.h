@@ -6,12 +6,14 @@
 #include <time.h> // time to initialize random
 #include <QString>
 
+#include <functions.h>
+
 class Note {
 
 private:
     int m_pitch;
 	int m_octave;
-    QString m_duration;
+    int m_duration;
 	bool m_dot;
 
 

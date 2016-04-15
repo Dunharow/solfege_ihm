@@ -4,7 +4,8 @@
 #include <QApplication>
 #include <QtWidgets>
 
-#include <note.h>
+#include <Note.h>
+#include <Staff.h>
 
 class Fenetre : public QWidget {
 
@@ -13,21 +14,14 @@ class Fenetre : public QWidget {
     private:
         // IHM
         QPushButton *m_buttons[7];
-        QLabel *m_image_note;
         QLabel *m_image_clef;
-        QPushButton *m_buttonDO;
-        QPushButton *m_buttonRE;
-        QPushButton *m_buttonMI;
-        QPushButton *m_buttonFA;
-        QPushButton *m_buttonSOL;
-        QPushButton *m_buttonLA;
-        QPushButton *m_buttonSI;
+        QLabel *m_image_note[4];
         QLabel *m_reponse1;
         QLabel *m_reponse2;
         QLabel *m_reponse3;
 
         // VARIABLES UTILES
-        Note m_note;
+        Staff *m_staff;
 
         // OTHER
         QString m_noteNames[7];

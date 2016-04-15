@@ -4,7 +4,7 @@
 #include <QFont>
 #include <QIcon>
 
-#include "fenetre.h"
+#include "Fenetre.h"
 
 int main(int argc, char *argv[])
 {

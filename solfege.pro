@@ -2,12 +2,16 @@ QT += widgets
 
 SOURCES += \
     main.cpp \
-    fenetre.cpp \
-    note.cpp
+    Note.cpp \
+    Fenetre.cpp \
+    functions.cpp \
+    Staff.cpp
 
 HEADERS += \
-    fenetre.h \
-    note.h
+    Note.h \
+    Fenetre.h \
+    functions.h \
+    Staff.h
 
 DISTFILES +=
 
