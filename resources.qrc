@@ -15,5 +15,31 @@
         <file>images/sol_si4.png</file>
         <file>images/sol_sol4.png</file>
         <file>images/sol_sol5.png</file>
+        <file>images/sol_sol4_vert.png</file>
+        <file>images/sol_sol5_vert.png</file>
+        <file>images/sol_si4_vert.png</file>
+        <file>images/sol_re5_vert.png</file>
+        <file>images/sol_re4_vert.png</file>
+        <file>images/sol_mi5_vert.png</file>
+        <file>images/sol_mi4_vert.png</file>
+        <file>images/sol_la5_vert.png</file>
+        <file>images/sol_la4_vert.png</file>
+        <file>images/sol_fa5_vert.png</file>
+        <file>images/sol_fa4_vert.png</file>
+        <file>images/sol_do5_vert.png</file>
+        <file>images/sol_do4_vert.png</file>
+        <file>images/sol_sol5_rouge.png</file>
+        <file>images/sol_sol4_rouge.png</file>
+        <file>images/sol_re4_rouge.png</file>
+        <file>images/sol_mi4_rouge.png</file>
+        <file>images/sol_la5_rouge.png</file>
+        <file>images/sol_la4_rouge.png</file>
+        <file>images/sol_fa5_rouge.png</file>
+        <file>images/sol_fa4_rouge.png</file>
+        <file>images/sol_do4_rouge.png</file>
+        <file>images/sol_si4_rouge.png</file>
+        <file>images/sol_do5_rouge.png</file>
+        <file>images/sol_re5_rouge.png</file>
+        <file>images/sol_mi5_rouge.png</file>
     </qresource>
 </RCC>

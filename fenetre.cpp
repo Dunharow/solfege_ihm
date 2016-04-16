@@ -66,9 +66,11 @@ void Fenetre::createLayout() {
 
     /* Assemblage de l'image et des boutons */
     QVBoxLayout *layoutPrincipal = new QVBoxLayout;
+    layoutPrincipal->insertStretch(0); // vertical space
     layoutPrincipal->addLayout(layout_partition);
     layoutPrincipal->addLayout(layout_buttons);
     layoutPrincipal->addLayout(layout_bottom);
+    layoutPrincipal->insertStretch(-1); // vertical space
     setLayout(layoutPrincipal);
 }
 
@@ -82,10 +84,12 @@ bool Fenetre::checkSolution(int a_pitch) {
         // Good answer
         m_score->correctAnswer(solution);
         m_reponse2->setStyleSheet("QLabel {color:green;}");
+        m_image_note[m_current_note]->setPixmap(QPixmap(":/resources/images/sol_"+m_staff->getNotes(m_current_note)+"_vert.png"));
     } else {
         // Bad answer
         m_score->wrongAnswer(solution);
         m_reponse2->setStyleSheet("QLabel {color:red;}");
+        m_image_note[m_current_note]->setPixmap(QPixmap(":/resources/images/sol_"+m_staff->getNotes(m_current_note)+"_rouge.png"));
     }
 
     m_reponse3->setText("Score : " + m_score->getScore());
