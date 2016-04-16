@@ -1,7 +1,7 @@
 #ifndef DEF_MAFENETRE
 #define DEF_MAFENETRE
 
-#define STAFF_NB_NOTES 4
+#define STAFF_SIZE 10
 
 #include <QApplication>
 #include <QtWidgets>
@@ -17,16 +17,18 @@ class Fenetre : public QWidget {
     private:
         // IHM
         QPushButton *m_buttons[7];
-        QLabel *m_image_clef;
-        QLabel *m_image_note[4];
+        QLabel *m_imageClef;
+        QLabel *m_imageNote[STAFF_SIZE];
+        QLabel *m_textNote[STAFF_SIZE];
         QLabel *m_reponse1;
         QLabel *m_reponse2;
         QLabel *m_reponse3;
 
         // VARIABLES UTILES
         Staff *m_staff;
-        int m_current_note;
         Score *m_score;
+        int m_currentNote;
+        int m_nbNotes;
 
         // OTHER
         QString m_noteNames[7];
@@ -34,11 +36,12 @@ class Fenetre : public QWidget {
     public:
         Fenetre();
         void createLayout();
+        void showStaff();
         void endGame();
         void continueGame();
 
     public slots:
-        bool checkSolution(int a_pitch);
+        void checkSolution(int a_pitch);
 };
 
 #endif

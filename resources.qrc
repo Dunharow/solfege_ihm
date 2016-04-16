@@ -41,5 +41,44 @@
         <file>images/sol_do5_rouge.png</file>
         <file>images/sol_re5_rouge.png</file>
         <file>images/sol_mi5_rouge.png</file>
+        <file>images/fa_do3.png</file>
+        <file>images/fa_do3_rouge.png</file>
+        <file>images/fa_do3_vert.png</file>
+        <file>images/fa_do4.png</file>
+        <file>images/fa_do4_rouge.png</file>
+        <file>images/fa_do4_vert.png</file>
+        <file>images/fa_fa2.png</file>
+        <file>images/fa_fa2_rouge.png</file>
+        <file>images/fa_fa2_vert.png</file>
+        <file>images/fa_fa3.png</file>
+        <file>images/fa_fa3_rouge.png</file>
+        <file>images/fa_fa3_vert.png</file>
+        <file>images/fa_la2.png</file>
+        <file>images/fa_la2_rouge.png</file>
+        <file>images/fa_la2_vert.png</file>
+        <file>images/fa_la3.png</file>
+        <file>images/fa_la3_rouge.png</file>
+        <file>images/fa_la3_vert.png</file>
+        <file>images/fa_mi2.png</file>
+        <file>images/fa_mi2_rouge.png</file>
+        <file>images/fa_mi2_vert.png</file>
+        <file>images/fa_mi3.png</file>
+        <file>images/fa_mi3_rouge.png</file>
+        <file>images/fa_mi3_vert.png</file>
+        <file>images/fa_re3.png</file>
+        <file>images/fa_re3_rouge.png</file>
+        <file>images/fa_re3_vert.png</file>
+        <file>images/fa_si2.png</file>
+        <file>images/fa_si2_rouge.png</file>
+        <file>images/fa_si2_vert.png</file>
+        <file>images/fa_si3.png</file>
+        <file>images/fa_si3_rouge.png</file>
+        <file>images/fa_si3_vert.png</file>
+        <file>images/fa_sol2.png</file>
+        <file>images/fa_sol2_rouge.png</file>
+        <file>images/fa_sol2_vert.png</file>
+        <file>images/fa_sol3.png</file>
+        <file>images/fa_sol3_rouge.png</file>
+        <file>images/fa_sol3_vert.png</file>
     </qresource>
 </RCC>

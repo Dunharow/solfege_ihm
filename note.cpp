@@ -3,12 +3,11 @@
 using namespace std;
 
 Note::Note(int min_pitch, int max_pitch, int min_octave, int max_octave) {
-    m_pitch = m_octave = -1;
-
-    m_octave = rand()%(max_octave-min_octave) + min_octave; // random between min and max
+    m_pitch = -1;
 
     while(compareNotes(min_pitch,m_pitch,min_octave,m_octave) || compareNotes(m_pitch,max_pitch,m_octave,max_octave)) {
         m_pitch = rand() % 7; // random between 0 and 6
+        m_octave = rand()%(max_octave-min_octave) + min_octave; // random between min and max
     }
 
     // OTHERS

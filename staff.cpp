@@ -1,9 +1,26 @@
 #include "Staff.h"
 
-Staff::Staff(unsigned int a_nbNotes, QString a_clef, int pitch_min, int pitch_max, int oct_min, int oct_max) {
+Staff::Staff(unsigned int a_nbNotes) {
+    int pitch_min, pitch_max, oct_min, oct_max;
+
     m_nbNotes = (a_nbNotes < NB_NOTE_MAX) ? a_nbNotes : NB_NOTE_MAX;
 
-    m_clef = (a_clef=="sol" || a_clef=="fa") ? a_clef : "sol";
+    switch (rand() %2) {
+        case 0:
+            m_clef = "sol";
+            oct_min = 4;
+            pitch_min = 0;
+            oct_max = 5;
+            pitch_max = 5;
+            break;
+        case 1:
+            m_clef = "fa";
+            pitch_min = 2;
+            pitch_max = 0;
+            oct_min =2;
+            oct_max =4;
+            break;
+    }
 
     for (int i=0; i<m_nbNotes; i++) {
         m_notes[i] = new Note(pitch_min, pitch_max, oct_min, oct_max);

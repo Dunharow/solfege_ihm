@@ -1,8 +1,4 @@
 #include <QApplication>
-#include <QPushButton>
-#include <QWidget>
-#include <QFont>
-#include <QIcon>
 #include <stdlib.h>  // srand, rand
 #include <time.h> // time to initialize random
 

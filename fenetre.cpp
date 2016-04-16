@@ -1,5 +1,6 @@
 #include "Fenetre.h"
 
+// Constructeur de la fenêtre
 Fenetre::Fenetre() : QWidget() {
 
     /* Initialisation */
@@ -11,44 +12,52 @@ Fenetre::Fenetre() : QWidget() {
     m_noteNames[5] = "La";
     m_noteNames[6] = "Si";
 
-    /* Initialisation du score et de la portée */
+    m_nbNotes = 4;
+    m_currentNote = 0;
+
     m_score = new Score();
-    m_staff = new Staff(STAFF_NB_NOTES,"sol",0,5,4,5);
-    m_current_note = 0;
+    m_staff = new Staff(m_nbNotes);
 
     /* Creation de l'interface */
     createLayout();
-    m_image_clef->setPixmap(QPixmap(":/resources/images/clef_" + m_staff->getClef() + ".png"));
-    for (int i=0; i<4; i++) {
-        m_image_note[i]->setPixmap(QPixmap(":/resources/images/sol_"+m_staff->getNotes(i)+".png"));
-    }
+    showStaff();
 
-    /* Connection des signaux / slot */
+    /* Connection des signaux/slots */
     QSignalMapper *signalMapper = new QSignalMapper(this);
     connect(signalMapper, SIGNAL(mapped(int)), this, SLOT(checkSolution(int))); // Connection du mapper au slot
     for (int i=0; i<7; i++) {
         signalMapper->setMapping(m_buttons[i],i); // Creation du mapper
         connect(m_buttons[i], SIGNAL(clicked()), signalMapper, SLOT(map())); // Connection mapper/boutons
     }
-
 }
 
+// Créations des layouts et design de la fenêtre
 void Fenetre::createLayout() {
 
     /* Layout de la partition */
+    QGridLayout *layout_partitionGrid = new QGridLayout;
+
+    m_imageClef = new QLabel("");
+    layout_partitionGrid->addWidget(m_imageClef,0,0);
+
+    for (int i=0; i<STAFF_SIZE; i++) {
+        m_imageNote[i] = new QLabel("");
+        m_textNote[i] = new QLabel("");
+        layout_partitionGrid->addWidget(m_imageNote[i],0,i+1);
+        layout_partitionGrid->addWidget(m_textNote[i],0,i+1);
+    }
+    layout_partitionGrid->setHorizontalSpacing(0);
+    layout_partitionGrid->setVerticalSpacing(1000);
+    layout_partitionGrid->setRowMinimumHeight(0,200);
+
     QHBoxLayout *layout_partition = new QHBoxLayout;
     layout_partition->insertStretch(0); // horizontal space
-    m_image_clef = new QLabel("");
-    layout_partition->addWidget(m_image_clef);
-    for (int i=0; i<4; i++) {
-        m_image_note[i] = new QLabel("");
-        layout_partition->addWidget(m_image_note[i]);
-    }
+    layout_partition->addLayout(layout_partitionGrid);
     layout_partition->insertStretch(-1); // horizontal space
-    layout_partition->setSpacing(0);
 
     /* Layout des boutons */
     QHBoxLayout *layout_buttons = new QHBoxLayout;
+
     for (int i=0; i<7; i++) {
         m_buttons[i] = new QPushButton(m_noteNames[i]);
         layout_buttons->addWidget(m_buttons[i]);
@@ -56,9 +65,11 @@ void Fenetre::createLayout() {
 
     /* Widget du bottom */
     QHBoxLayout *layout_bottom = new QHBoxLayout;
+
     m_reponse1 = new QLabel("Réponse : ");
     m_reponse2 = new QLabel("");
     m_reponse3 = new QLabel("Score : "+m_score->getScore());
+
     layout_bottom->addWidget(m_reponse1);
     layout_bottom->addWidget(m_reponse2);
     layout_bottom->insertStretch(2); // horizontal space
@@ -74,9 +85,20 @@ void Fenetre::createLayout() {
     setLayout(layoutPrincipal);
 }
 
-bool Fenetre::checkSolution(int a_pitch) {
+// Afficher la portée sans couleur
+void Fenetre::showStaff() {
 
-    int solution = m_staff->getPitches(m_current_note);
+    m_imageClef->setPixmap(QPixmap(":/resources/images/clef_" + m_staff->getClef() + ".png"));
+
+    for (int i=0; i<4; i++) {
+        m_imageNote[i]->setPixmap(QPixmap(":/resources/images/"+m_staff->getClef()+"_"+m_staff->getNotes(i)+".png"));
+    }
+}
+
+// Vérifier la solution avec le bouton
+void Fenetre::checkSolution(int a_pitch) {
+
+    int solution = m_staff->getPitches(m_currentNote);
 
     m_reponse2->setText(m_noteNames[solution]);
 
@@ -84,35 +106,26 @@ bool Fenetre::checkSolution(int a_pitch) {
         // Good answer
         m_score->correctAnswer(solution);
         m_reponse2->setStyleSheet("QLabel {color:green;}");
-        m_image_note[m_current_note]->setPixmap(QPixmap(":/resources/images/sol_"+m_staff->getNotes(m_current_note)+"_vert.png"));
+        m_textNote[m_currentNote+1]->setText(m_noteNames[solution]);
+        m_textNote[m_currentNote+1]->setStyleSheet("QLabel {color:green;}");
+        m_imageNote[m_currentNote]->setPixmap(QPixmap(":/resources/images/"+m_staff->getClef()+"_"+m_staff->getNotes(m_currentNote)+"_vert.png"));
     } else {
         // Bad answer
         m_score->wrongAnswer(solution);
         m_reponse2->setStyleSheet("QLabel {color:red;}");
-        m_image_note[m_current_note]->setPixmap(QPixmap(":/resources/images/sol_"+m_staff->getNotes(m_current_note)+"_rouge.png"));
+        m_textNote[m_currentNote+1]->setText(m_noteNames[solution]);
+        m_textNote[m_currentNote+1]->setStyleSheet("QLabel {color:red;}");
+        m_imageNote[m_currentNote]->setPixmap(QPixmap(":/resources/images/"+m_staff->getClef()+"_"+m_staff->getNotes(m_currentNote)+"_rouge.png"));
     }
 
     m_reponse3->setText("Score : " + m_score->getScore());
 
-    m_current_note++;
+    m_currentNote++;
 
-    if (m_current_note==STAFF_NB_NOTES) {endGame();}
-
-    return true;
+    if (m_currentNote==m_nbNotes) {endGame();}
 }
 
-void Fenetre::continueGame() {
-    m_current_note = 0;
-
-    delete m_staff;
-    m_staff = new Staff(STAFF_NB_NOTES,"sol",0,5,4,5);
-
-    m_image_clef->setPixmap(QPixmap(":/resources/images/clef_" + m_staff->getClef() + ".png"));
-    for (int i=0; i<4; i++) {
-        m_image_note[i]->setPixmap(QPixmap(":/resources/images/sol_"+m_staff->getNotes(i)+".png"));
-    }
-}
-
+// Triggered when last note is checked
 void Fenetre::endGame() {
 
     switch(QMessageBox::question(this, "Fin du jeu",
@@ -126,4 +139,14 @@ void Fenetre::endGame() {
         qApp->quit();
         break;
     }
+}
+
+// Reset the staff but not the score
+void Fenetre::continueGame() {
+
+    m_currentNote = 0;
+
+    delete m_staff;
+    m_staff = new Staff(m_nbNotes);
+    showStaff();
 }

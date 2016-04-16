@@ -3,6 +3,7 @@
 
 #define NB_NOTE_MAX 10
 #include <Note.h>
+#include <stdlib.h>  // srand, rand
 
 class Staff {
 private:
@@ -11,7 +12,7 @@ private:
     int m_nbNotes;
 
 public:
-    Staff(unsigned int m_nbNotes=4, QString m_clef="sol", int pitch_min=0, int pitch_max=6, int oct_min=4, int oct_max=6);
+    Staff(unsigned int m_nbNotes=4);
     void regenerate(unsigned int m_nbNotes=4, QString m_clef="sol", int pitch_min=0, int pitch_max=6, int oct_min=4, int oct_max=6);
     void setClef(QString a_clef);
     QString getClef();
