@@ -15,6 +15,7 @@ public:
     int getCorrect();
     int getTotal();
     QString getScore();
+
 };
 
 #endif // SCORE_H

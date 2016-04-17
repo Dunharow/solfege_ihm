@@ -20,7 +20,7 @@ public:
     Note(int min_pitch = 0, int max_pitch = 7, int min_octave = 1, int max_octave = 7);
     QString getNote(); // must change to image output
     int getPitch();
-    int Note::getOctave();
+    int getOctave();
 };
 
 #endif

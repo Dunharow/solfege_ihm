@@ -44,11 +44,10 @@ void Fenetre::createLayout() {
         m_imageNote[i] = new QLabel("");
         m_textNote[i] = new QLabel("");
         layout_partitionGrid->addWidget(m_imageNote[i],0,i+1);
-        layout_partitionGrid->addWidget(m_textNote[i],0,i+1);
+        layout_partitionGrid->addWidget(m_textNote[i],1,i+1);
+        m_textNote[i]->setAlignment(Qt::AlignCenter);
     }
     layout_partitionGrid->setHorizontalSpacing(0);
-    layout_partitionGrid->setVerticalSpacing(1000);
-    layout_partitionGrid->setRowMinimumHeight(0,200);
 
     QHBoxLayout *layout_partition = new QHBoxLayout;
     layout_partition->insertStretch(0); // horizontal space
@@ -66,14 +65,11 @@ void Fenetre::createLayout() {
     /* Widget du bottom */
     QHBoxLayout *layout_bottom = new QHBoxLayout;
 
-    m_reponse1 = new QLabel("Réponse : ");
-    m_reponse2 = new QLabel("");
-    m_reponse3 = new QLabel("Score : "+m_score->getScore());
+    m_scoreLabel = new QLabel("");
+    showScore();
 
-    layout_bottom->addWidget(m_reponse1);
-    layout_bottom->addWidget(m_reponse2);
-    layout_bottom->insertStretch(2); // horizontal space
-    layout_bottom->addWidget(m_reponse3);
+    layout_bottom->insertStretch(0); // horizontal space
+    layout_bottom->addWidget(m_scoreLabel);
 
     /* Assemblage de l'image et des boutons */
     QVBoxLayout *layoutPrincipal = new QVBoxLayout;
@@ -91,8 +87,22 @@ void Fenetre::showStaff() {
     m_imageClef->setPixmap(QPixmap(":/resources/images/clef_" + m_staff->getClef() + ".png"));
 
     for (int i=0; i<4; i++) {
-        m_imageNote[i]->setPixmap(QPixmap(":/resources/images/"+m_staff->getClef()+"_"+m_staff->getNotes(i)+".png"));
+        m_imageNote[i]->setPixmap(QPixmap(":/resources/images/"
+            +QString::number(note2value(m_staff->getPitches(i), m_staff->getOctaves(i),m_staff->getClef()))+".png"));
     }
+}
+
+void Fenetre::showScore() {
+    QString texte="Score : ";
+    texte += QString::number(m_score->getCorrect()) +"/"+QString::number(m_score->getTotal()) + " ";
+
+    if (m_score->getTotal()==0) {
+        texte += "(0.0 %)";
+    } else {
+        texte += "(" + QString::number((double)m_score->getCorrect()/m_score->getTotal()*100,'f',1) + " %)";
+    }
+
+    m_scoreLabel->setText(texte);
 }
 
 // Vérifier la solution avec le bouton
@@ -100,25 +110,25 @@ void Fenetre::checkSolution(int a_pitch) {
 
     int solution = m_staff->getPitches(m_currentNote);
 
-    m_reponse2->setText(m_noteNames[solution]);
+    m_textNote[m_currentNote]->setText(m_noteNames[solution]);
 
     if (a_pitch == solution) {
         // Good answer
         m_score->correctAnswer(solution);
-        m_reponse2->setStyleSheet("QLabel {color:green;}");
-        m_textNote[m_currentNote+1]->setText(m_noteNames[solution]);
-        m_textNote[m_currentNote+1]->setStyleSheet("QLabel {color:green;}");
-        m_imageNote[m_currentNote]->setPixmap(QPixmap(":/resources/images/"+m_staff->getClef()+"_"+m_staff->getNotes(m_currentNote)+"_vert.png"));
+        m_textNote[m_currentNote]->setStyleSheet("QLabel {color:green;}");
+        m_imageNote[m_currentNote]->setPixmap(QPixmap(":/resources/images/"
+            +QString::number(note2value(m_staff->getPitches(m_currentNote), m_staff->getOctaves(m_currentNote),m_staff->getClef()))
+            +"_vert.png"));
     } else {
         // Bad answer
         m_score->wrongAnswer(solution);
-        m_reponse2->setStyleSheet("QLabel {color:red;}");
-        m_textNote[m_currentNote+1]->setText(m_noteNames[solution]);
-        m_textNote[m_currentNote+1]->setStyleSheet("QLabel {color:red;}");
-        m_imageNote[m_currentNote]->setPixmap(QPixmap(":/resources/images/"+m_staff->getClef()+"_"+m_staff->getNotes(m_currentNote)+"_rouge.png"));
+        m_textNote[m_currentNote]->setStyleSheet("QLabel {color:red;}");
+        m_imageNote[m_currentNote]->setPixmap(QPixmap(":/resources/images/"
+            +QString::number(note2value(m_staff->getPitches(m_currentNote), m_staff->getOctaves(m_currentNote),m_staff->getClef()))
+            +"_rouge.png"));
     }
 
-    m_reponse3->setText("Score : " + m_score->getScore());
+    showScore();
 
     m_currentNote++;
 
@@ -149,4 +159,8 @@ void Fenetre::continueGame() {
     delete m_staff;
     m_staff = new Staff(m_nbNotes);
     showStaff();
+
+    for (int i=0; i<STAFF_SIZE; i++) {
+        m_textNote[i]->setText("");
+    }
 }

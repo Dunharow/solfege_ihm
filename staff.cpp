@@ -59,6 +59,13 @@ int Staff::getPitches(int number) {
     return m_notes[number]->getPitch();
 }
 
+int Staff::getOctaves(int number) {
+
+    if ((number > NB_NOTE_MAX) || (number<0)) {number = NB_NOTE_MAX;}
+
+    return m_notes[number]->getOctave();
+}
+
 Staff::~Staff() {
     for (int i=0; i<m_nbNotes; i++) {
         delete m_notes[i];

@@ -20,9 +20,7 @@ class Fenetre : public QWidget {
         QLabel *m_imageClef;
         QLabel *m_imageNote[STAFF_SIZE];
         QLabel *m_textNote[STAFF_SIZE];
-        QLabel *m_reponse1;
-        QLabel *m_reponse2;
-        QLabel *m_reponse3;
+        QLabel *m_scoreLabel;
 
         // VARIABLES UTILES
         Staff *m_staff;
@@ -37,6 +35,7 @@ class Fenetre : public QWidget {
         Fenetre();
         void createLayout();
         void showStaff();
+        void showScore();
         void endGame();
         void continueGame();
 

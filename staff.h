@@ -17,6 +17,7 @@ public:
     void setClef(QString a_clef);
     QString getClef();
     int getPitches(int number=-1);
+    int getOctaves(int number=-1);
     QString getNotes(int number=-1);
     ~Staff(); // destructeur
 };
