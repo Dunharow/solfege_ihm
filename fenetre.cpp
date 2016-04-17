@@ -1,6 +1,8 @@
 #include "Fenetre.h"
 
-// Constructeur de la fenêtre
+/**
+ *  Constructeur de la fenêtre
+ */
 Fenetre::Fenetre() : QWidget() {
 
     /* Initialisation */
@@ -31,7 +33,9 @@ Fenetre::Fenetre() : QWidget() {
     }
 }
 
-// Créations des layouts et design de la fenêtre
+/**
+ *  Créations des layouts et design de la fenêtre
+*/
 void Fenetre::createLayout() {
 
     /* Layout de la partition */
@@ -71,17 +75,32 @@ void Fenetre::createLayout() {
     layout_bottom->insertStretch(0); // horizontal space
     layout_bottom->addWidget(m_scoreLabel);
 
+    // Debug grid
+    QGridLayout *m_debugGrid = new QGridLayout;
+
+    for (int i=0; i<13; i++) {
+        m_debugLabel[i][0] = new QLabel(QString::number(m_score->getPerc("sol",i)));
+        m_debugGrid->addWidget(m_debugLabel[i][0],0,i);
+        m_debugLabel[i][1] = new QLabel(QString::number(m_score->getPerc("fa",i)));
+        m_debugGrid->addWidget(m_debugLabel[i][1],1,i);
+    }
+
     /* Assemblage de l'image et des boutons */
     QVBoxLayout *layoutPrincipal = new QVBoxLayout;
     layoutPrincipal->insertStretch(0); // vertical space
     layoutPrincipal->addLayout(layout_partition);
     layoutPrincipal->addLayout(layout_buttons);
     layoutPrincipal->addLayout(layout_bottom);
+    layoutPrincipal->addLayout(m_debugGrid);
     layoutPrincipal->insertStretch(-1); // vertical space
     setLayout(layoutPrincipal);
+
+
 }
 
-// Afficher la portée sans couleur
+/**
+ *  Afficher la portée sans couleur
+*/
 void Fenetre::showStaff() {
 
     m_imageClef->setPixmap(QPixmap(":/resources/images/clef_" + m_staff->getClef() + ".png"));
@@ -92,6 +111,9 @@ void Fenetre::showStaff() {
     }
 }
 
+/**
+ *  Afficher le score
+*/
 void Fenetre::showScore() {
     QString texte="Score : ";
     texte += QString::number(m_score->getCorrect()) +"/"+QString::number(m_score->getTotal()) + " ";
@@ -105,37 +127,52 @@ void Fenetre::showScore() {
     m_scoreLabel->setText(texte);
 }
 
-// Vérifier la solution avec le bouton
+/**
+ *  Afficher la grille de débug
+*/
+void Fenetre::showDebug() {
+    for (int i=0; i<13; i++) {
+        m_debugLabel[i][0]->setText(QString::number(m_score->getPerc("sol",i)));
+        m_debugLabel[i][1]->setText(QString::number(m_score->getPerc("fa",i)));
+    }
+}
+
+/**
+ *  Vérifier la solution depuis un bouton
+*/
 void Fenetre::checkSolution(int a_pitch) {
 
-    int solution = m_staff->getPitches(m_currentNote);
+    int solutionPitch = m_staff->getPitches(m_currentNote);
+    int solutionOcta =  m_staff->getOctaves(m_currentNote);
+    QString solutionClef = m_staff->getClef();
 
-    m_textNote[m_currentNote]->setText(m_noteNames[solution]);
+    m_textNote[m_currentNote]->setText(m_noteNames[solutionPitch]);
 
-    if (a_pitch == solution) {
+    if (a_pitch == solutionPitch) {
         // Good answer
-        m_score->correctAnswer(solution);
+        m_score->correctAnswer(solutionOcta,solutionPitch,solutionClef);
         m_textNote[m_currentNote]->setStyleSheet("QLabel {color:green;}");
         m_imageNote[m_currentNote]->setPixmap(QPixmap(":/resources/images/"
-            +QString::number(note2value(m_staff->getPitches(m_currentNote), m_staff->getOctaves(m_currentNote),m_staff->getClef()))
-            +"_vert.png"));
+            +QString::number(note2value(solutionPitch, solutionOcta, solutionClef))+"_vert.png"));
     } else {
         // Bad answer
-        m_score->wrongAnswer(solution);
+        m_score->wrongAnswer(solutionOcta,solutionPitch,solutionClef);
         m_textNote[m_currentNote]->setStyleSheet("QLabel {color:red;}");
         m_imageNote[m_currentNote]->setPixmap(QPixmap(":/resources/images/"
-            +QString::number(note2value(m_staff->getPitches(m_currentNote), m_staff->getOctaves(m_currentNote),m_staff->getClef()))
-            +"_rouge.png"));
+            +QString::number(note2value(solutionPitch, solutionOcta, solutionClef))+"_rouge.png"));
     }
 
     showScore();
+    showDebug();
 
     m_currentNote++;
 
     if (m_currentNote==m_nbNotes) {endGame();}
 }
 
-// Triggered when last note is checked
+/**
+ *  Fin du jeu
+*/
 void Fenetre::endGame() {
 
     switch(QMessageBox::question(this, "Fin du jeu",
@@ -151,7 +188,9 @@ void Fenetre::endGame() {
     }
 }
 
-// Reset the staff but not the score
+/**
+ *  Continuer le jeu
+*/
 void Fenetre::continueGame() {
 
     m_currentNote = 0;

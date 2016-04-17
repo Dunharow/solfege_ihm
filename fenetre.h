@@ -21,6 +21,7 @@ class Fenetre : public QWidget {
         QLabel *m_imageNote[STAFF_SIZE];
         QLabel *m_textNote[STAFF_SIZE];
         QLabel *m_scoreLabel;
+        QLabel *m_debugLabel[13][2];
 
         // VARIABLES UTILES
         Staff *m_staff;
@@ -36,6 +37,7 @@ class Fenetre : public QWidget {
         void createLayout();
         void showStaff();
         void showScore();
+        void showDebug();
         void endGame();
         void continueGame();
 
