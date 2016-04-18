@@ -15,6 +15,11 @@ Note::Note(int min_pitch, int max_pitch, int min_octave, int max_octave) {
     m_dot = false;
 }
 
+Note::Note(unsigned int a_pitch, unsigned int an_octave) {
+    m_pitch = (a_pitch<7) ? m_pitch : -1;
+    m_octave = an_octave;
+}
+
 QString Note::getNote() {
     QString result("");
 

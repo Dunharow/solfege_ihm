@@ -167,19 +167,19 @@ void Fenetre::checkSolution(int a_pitch) {
 
     m_currentNote++;
 
-    if (m_currentNote==m_nbNotes) {endGame();}
+    if (m_currentNote==m_nbNotes) {endOfStaff();}
 }
 
 /**
  *  Fin du jeu
 */
-void Fenetre::endGame() {
+void Fenetre::endOfStaff() {
 
     switch(QMessageBox::question(this, "Fin du jeu",
              "Le jeu est fini ! \nVotre score est " + m_score->getScore()+"\nVoulez-vous continuer ?",
              QMessageBox::Yes | QMessageBox::No)) {
     case QMessageBox::Yes:
-        continueGame();
+        createNewStaff();
         break;
 
     case QMessageBox::No:
@@ -191,12 +191,27 @@ void Fenetre::endGame() {
 /**
  *  Continuer le jeu
 */
-void Fenetre::continueGame() {
+void Fenetre::createNewStaff() {
 
     m_currentNote = 0;
 
     delete m_staff;
-    m_staff = new Staff(m_nbNotes);
+    m_score->makeRanking();
+
+    QString a_clef;
+    int pitchTable[4], octaTable[4];
+
+    for (int i=0; i<4; i++) {
+        pitchTable[i]=i;
+        octaTable[i]=i;
+    }
+
+    if (rand() %2 == 0) { a_clef = "sol"; }
+    else                { a_clef = "fa";}
+
+    m_score->getRanking(pitchTable, octaTable,4,a_clef);
+
+    m_staff = new Staff(pitchTable, octaTable,4,a_clef);
     showStaff();
 
     for (int i=0; i<STAFF_SIZE; i++) {

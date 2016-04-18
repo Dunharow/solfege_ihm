@@ -103,3 +103,45 @@ double Score::getPerc(QString a_clef, int a_note) {
         return m_faPerc[a_note];
     }
 }
+
+void Score::makeRanking() {
+    double tmp_solPerc[13];
+    double tmp_faPerc[13];
+
+    for (int i=0; i<13; i++) {
+        m_solRanking[i] = i+1;
+        m_faRanking[i]  = i+1;
+        tmp_solPerc[i]  = m_solPerc[i];
+        tmp_faPerc[i]   = m_faPerc[i];
+    }
+
+    trierTableau(tmp_solPerc, m_solRanking, 13);
+    trierTableau(tmp_faPerc,  m_faRanking,  13);
+
+
+}
+
+void Score::getRanking(int pitchTable[],int octaTable[], int longueur, QString a_clef) {
+    // Randomize the order of the first ranked notes
+    for (int i=longueur; i>0; i--) {
+
+        // /!\ a%0 = a (possibilité d'aller en dehors du tableau)
+        if (a_clef=="fa") {
+            echanger(m_faRanking, rand()%i, m_faRanking[i]);}
+        else              {
+            echanger(m_solRanking,rand()%i, m_solRanking[i]);}
+    }
+
+    if (a_clef=="fa") {
+        for (int i=0; i<longueur; i++) {
+            pitchTable[i] = value2pitch(m_faRanking[i],"fa");
+            octaTable[i] = value2octave(m_faRanking[i],"fa");
+        }
+    } else {
+        for (int i=0; i<longueur; i++) {
+            pitchTable[i] = value2pitch(m_solRanking[i],"sol");
+            octaTable[i] = value2octave(m_solRanking[i],"sol");
+        }
+    }
+
+}

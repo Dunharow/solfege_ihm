@@ -38,8 +38,8 @@ class Fenetre : public QWidget {
         void showStaff();
         void showScore();
         void showDebug();
-        void endGame();
-        void continueGame();
+        void endOfStaff();
+        void createNewStaff();
 
     public slots:
         void checkSolution(int a_pitch);

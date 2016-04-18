@@ -17,7 +17,8 @@ private:
 
 
 public:
-    Note(int min_pitch = 0, int max_pitch = 7, int min_octave = 1, int max_octave = 7);
+    Note(int min_pitch, int max_pitch, int min_octave, int max_octave);
+    Note(unsigned int a_pitch, unsigned int an_octave);
     QString getNote(); // must change to image output
     int getPitch();
     int getOctave();

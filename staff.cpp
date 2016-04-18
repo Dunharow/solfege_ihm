@@ -27,6 +27,18 @@ Staff::Staff(unsigned int a_nbNotes) {
     }
 }
 
+Staff::Staff(int pitchTable[], int octaTable[], unsigned int a_nbNotes, QString a_clef) {
+
+    m_nbNotes = (a_nbNotes < NB_NOTE_MAX) ? a_nbNotes : NB_NOTE_MAX;
+
+    for (int i=0; i<m_nbNotes; i++) {
+        m_notes[i] = new Note(pitchTable[i], octaTable[i]);
+    }
+
+    if (a_clef == "fa") {m_clef = "fa";}
+    else                {m_clef = "sol";}
+}
+
 void Staff::setClef (QString a_clef) {
     if (a_clef=="sol" || a_clef=="fa") {
         m_clef = a_clef;
@@ -35,15 +47,15 @@ void Staff::setClef (QString a_clef) {
 
 QString Staff::getClef() {return m_clef;}
 
-void Staff::regenerate(unsigned int a_nbNotes, QString a_clef, int pitch_min, int pitch_max, int oct_min, int oct_max) {
-    m_nbNotes = (a_nbNotes < NB_NOTE_MAX) ? a_nbNotes : NB_NOTE_MAX;
+//void Staff::regenerate(unsigned int a_nbNotes, QString a_clef, int pitch_min, int pitch_max, int oct_min, int oct_max) {
+//    m_nbNotes = (a_nbNotes < NB_NOTE_MAX) ? a_nbNotes : NB_NOTE_MAX;
 
-    m_clef = a_clef;
+//    m_clef = a_clef;
 
-    for (int i=0; i<m_nbNotes; i++) {
-        //m_notes[i]->regenerate(pitch_min, pitch_max, oct_min, oct_max);
-    }
-}
+//    for (int i=0; i<m_nbNotes; i++) {
+//        //m_notes[i]->regenerate(pitch_min, pitch_max, oct_min, oct_max);
+//    }
+//}
 
 QString Staff::getNotes(int number) {
 
